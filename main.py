@@ -18,9 +18,18 @@ class Book(BaseModel):
     image_url: str
 
 
-books: List[Book] = [
-    
-]
+books: List[Book] = []
+
+books.append(
+    Book(
+        id=1,
+        title="Python Crash Course",
+        author="Eric Matthes",
+        publisher="No Starch Press",
+        image_url="/images/1.jpg",
+    )
+)
+
 
 @app.post("/books/", response_model=Book)
 def add_book(
@@ -28,7 +37,7 @@ def add_book(
     title: str = Form(..., min_length=3, max_length=100),
     author: str = Form(...),
     publisher: str = Form(...),
-    image: UploadFile = File(...)
+    image: UploadFile = File(...),
 ):
 
     if any(b.id == id for b in books):
@@ -44,18 +53,18 @@ def add_book(
         title=title,
         author=author,
         publisher=publisher,
-        image_url=f"/images/{image.filename}"
+        image_url=f"/images/{image.filename}",
     )
 
     books.append(new_book)
     return new_book
 
+
 @app.get("/search/", response_model=List[Book])
-def search_books(
-    q: str = Query(..., min_length=3, max_length=100)
-):
+def search_books(q: str = Query(..., min_length=3, max_length=100)):
     return [
-        book for book in books
+        book
+        for book in books
         if q.lower() in book.title.lower()
         or q.lower() in book.author.lower()
         or q.lower() in book.publisher.lower()
