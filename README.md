@@ -10,7 +10,7 @@ A simple API to manage books with image upload.
 - Search books by title, author, or publisher (`GET /search/`)
 - Title and query length: 3–100 characters
 - Images stored in `images/` folder
-- Data stored in memory (cleared on server restart)
+- Data stored in SQL
 
 ---
 
