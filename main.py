@@ -13,6 +13,7 @@ from sqlalchemy import (
     Column,
     Integer,
     String,
+    func,
     select,
     or_,
 )
@@ -47,6 +48,10 @@ class Book(BaseModel):
     author: str
     publisher: str
     image_url: str
+
+class AuthorCount(BaseModel):
+    author : str
+    book_count: int
 
 
 @app.on_event("startup")
@@ -120,3 +125,25 @@ async def search_books(q: str = Query(..., min_length=3, max_length=100)):
     )
     results = await database.fetch_all(query)
     return [Book(**r) for r in results]
+
+@app.get("/authors/", response_model=List[AuthorCount])
+async def search_authors(name: str = Query(None)):
+    query = select(
+        books_table.c.author,
+        func.count(books_table.c.id).label("book_count"),
+    ).group_by(books_table.c.author)
+
+    if name:
+        query = query.where(
+            books_table.c.author.ilike(f"%{name}%")
+        )
+
+    results = await database.fetch_all(query)
+
+    return [
+        AuthorCount(
+            author=row["author"],
+            book_count=row["book_count"]
+        )
+        for row in results
+    ]

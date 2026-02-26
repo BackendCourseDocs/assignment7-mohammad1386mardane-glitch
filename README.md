@@ -1,33 +1,31 @@
-# 📚 Book API with FastAPI
+# 📚 Book API
 
-A simple API to manage books with image upload.
+A **simple API for managing books** built with FastAPI and PostgreSQL.
+
+This project allows you to:
+- Add new books with images
+- Search books by title, author, or publisher
+- Get a list of authors and the number of books they have
 
 ---
 
 ## ⚡ Features
 
-- Add a book with an image (`POST /books/`)
-- Search books by title, author, or publisher (`GET /search/`)
-- Title and query length: 3–100 characters
-- Images stored in `images/` folder
-- Data stored in SQL
+- Add new books with `POST /books/`
+- Search books with `GET /search/?q=keyword`
+- Get authors and book counts with `GET /authors/`
+- Uses **SQLAlchemy Core** with PostgreSQL
+- Stores book images in the `/images/` folder
 
 ---
 
-## 🛠 Installation
+## 🛠️ Installation & Setup
 
-1. Clone the repo:
+### Install environment and dependencies
 
 ```bash
-git clone https://github.com/USERNAME/REPO.git
-cd REPO
-python -m venv venv
-venv\Scripts\activate      # Windows
-source venv/bin/activate  # Linux / Mac
+python -m venv venv # Windows
+venv\Scripts\activate # Mac/Linux
+source venv/bin/activate
 
-pip install -r requirements.txt
-
-python -m uvicorn main:app --reload
-
-Swagger UI: http://127.0.0.1:8000/docs
-```
+pip install fastapi uvicorn sqlalchemy databases asyncpg pydantic
