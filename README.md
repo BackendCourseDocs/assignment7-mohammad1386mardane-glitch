@@ -28,6 +28,6 @@ python -m venv venv # Windows
 venv\Scripts\activate # Mac/Linux
 source venv/bin/activate
 
-pip install fastapi uvicorn sqlalchemy databases asyncpg pydantic
-
+pip install -r requirements.txt
+```
 swagger UI : http://127.0.0.1:5432/docs
