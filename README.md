@@ -39,4 +39,4 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-swagger UI : http://127.0.0.1:5432/docs
+swagger UI : http://127.0.0.1:8000/docs
